@@ -1,2 +1,11 @@
-﻿NewTrainingFramework.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-LINK : fatal error LNK1207: incompatible PDB format in 'C:\Users\anast\Desktop\proiect_2015\NewTrainingFramework_2015\BIN-ATI\NewTrainingFramework.pdb'; delete and rebuild
+﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Shaders.cpp
+  NewTrainingFramework.cpp
+C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\NewTrainingFramework.cpp(85,17): warning C4305: '-=': truncation from 'double' to 'float'
+  (compiling source file '/NewTrainingFramework.cpp')
+  
+  Generating Code...
+NewTrainingFramework.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+LINK : fatal error LNK1207: incompatible PDB format in 'C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\BIN-ATI\NewTrainingFramework.pdb'; delete and rebuild
