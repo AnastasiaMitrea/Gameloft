@@ -83,7 +83,7 @@ void Update ( ESContext *esContext, float deltaTime )
 	angle += step ; 
 	if (angle > 2.0f * PI)
 		angle -= 2.0f * PI; 
-	//printf("Angle: %f\n", angle);
+	
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)

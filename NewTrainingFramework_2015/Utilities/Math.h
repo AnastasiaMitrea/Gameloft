@@ -117,6 +117,8 @@ public:
 	GLfloat y;
 	GLfloat z;
 	GLfloat w;
+
+	Vector3 toVector3() const;
 };
 
 //Matrix 4 X 4

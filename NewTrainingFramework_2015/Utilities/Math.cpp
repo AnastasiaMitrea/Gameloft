@@ -316,6 +316,10 @@ Vector4 Vector4::operator * ( Matrix & m )
 	return res;
 }
 
+Vector3 Vector4::toVector3() const {
+	return Vector3(x, y, z);
+}
+
 
 //Matrix 4 X 4
 
