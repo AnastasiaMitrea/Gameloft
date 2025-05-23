@@ -58,10 +58,11 @@ void Camera::moveOz(int sens) {
 
 void Camera::rotateOx(int sens) {
 	Matrix mRotateOX;
-	Vector4 localUp;
+	mRotateOX.SetRotationX(rotateSpeed * deltaTime * sens);
+	Vector4 localUp(0.0f, 1.0f, 0.0f, 0.0f);
 	Vector4 rotatedLocalUp = localUp * mRotateOX;
 	Vector4 localTarget = Vector4(0.0f, 0.0f, -(target - position).Length(), 1.0f);
-	Vector4 rotatedTarget = (localTarget * mRotateOX).toVector3();
+	Vector4 rotatedTarget = (mRotateOX * localTarget).toVector3();
 	up = (rotatedLocalUp * worldMatrix).toVector3();
 	up = up.Normalize();
 	target = (rotatedTarget * worldMatrix).toVector3();
@@ -69,16 +70,19 @@ void Camera::rotateOx(int sens) {
 
 void Camera::rotateOy(int sens) {
 	Matrix mRotateOY;
+	mRotateOY.SetRotationY(rotateSpeed * deltaTime * sens); 
 	Vector4 localTarget = Vector4(0.0f, 0.0f, -(target - position).Length(), 1.0f);
 	Vector4 rotatedTarget = localTarget * mRotateOY;
-	target = (rotatedTarget * worldMatrix).toVector3();
+	target = (worldMatrix * rotatedTarget).toVector3();
 	updateWorldView();
 }
 
 void Camera::rotateOz(int sens) {
-	Matrix mRotateOZ = rotateSpeed * deltaTime * sens;
+	Matrix mRotateOZ;
+	mRotateOZ.SetRotationZ(rotateSpeed * deltaTime * sens);
 	Vector4 localUp = Vector4(up, 0.0f);
-	Vector4 rotatedUp = localUp * mRotateOZ;
-	up = (rotatedUp * worldMatrix).toVector3();
+	Vector4 rotatedUp = mRotateOZ * localUp;
+	up = (worldMatrix * rotatedUp).toVector3();
+	up = up.Normalize();
 	updateWorldView();
 }
