@@ -27,7 +27,7 @@ public:
 	void rotateOz(int sens);
 	void updateAxes();
 	void updateWorldView();
-	void setDeltaTime(GLfloat);
+	void setDeltaTime(GLfloat dt);
 
 	Camera();
 	Camera(Vector3 position, Vector3 target, Vector3 up,

@@ -1,5 +1,5 @@
 ﻿#include "Camera.h"
-#include <stdafx.h>
+#include "stdafx.h"
 
 Camera::Camera()
 	: position(Vector3(0, 0, -1)),
@@ -9,7 +9,8 @@ Camera::Camera()
 	nearPlane(0.2f),
 	farPlane(10.0f),
 	moveSpeed(0.1f),
-	rotateSpeed(0.1f)
+	rotateSpeed(0.1f),
+	deltaTime(0.0f)
 {
 	updateWorldView();
 };
@@ -118,3 +119,6 @@ void Camera::updateWorldView() {
 	viewMatrix = Tinv * Rt;
 }
 
+void Camera::setDeltaTime(GLfloat dt){
+	deltaTime = dt;
+}
