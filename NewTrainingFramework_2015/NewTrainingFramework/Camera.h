@@ -33,5 +33,4 @@ public:
 	Camera(Vector3 position, Vector3 target, Vector3 up,
 		GLfloat moveSpeed, GLfloat rotateSpeed, GLfloat nearPlane,
 		GLfloat farPlane, GLfloat fov);
-
 };

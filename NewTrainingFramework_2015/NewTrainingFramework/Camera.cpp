@@ -86,3 +86,35 @@ void Camera::rotateOz(int sens) {
 	up = up.Normalize();
 	updateWorldView();
 }
+
+void Camera::updateAxes() {
+	zAxis = -(target - position).Normalize();
+	yAxis = up.Normalize();
+	xAxis = zAxis.Cross(yAxis).Normalize();  //face produs vectorial între zAxis si yAxis - asta da vectorul perpendicular pe amandoua - dreapta camerei
+}
+
+void Camera::updateWorldView() {
+	updateAxes();
+	Matrix T;
+	Matrix R;
+	Matrix Tinv;
+	Matrix Rt;
+
+	T.SetIdentity();
+	T.m[0][3] = position.x; T.m[1][3] = position.y; T.m[2][3] = position.z;
+	
+	R.SetZero();
+	R.m[0][0] = xAxis.x; R.m[0][1] = xAxis.y; R.m[0][2] = xAxis.z;
+	R.m[1][0] = yAxis.x; R.m[1][1] = yAxis.y; R.m[1][2] = yAxis.z;
+	R.m[2][0] = zAxis.x; R.m[2][1] = zAxis.y; R.m[2][2] = zAxis.z;
+	R.m[3][3] = 1;
+
+	worldMatrix = R * T;
+	
+	Tinv.SetIdentity();
+	Tinv.m[0][3] = -position.x; Tinv.m[1][3] = -position.y; Tinv.m[2][3] = -position.z;
+	
+	Rt = R.Transpose();
+	viewMatrix = Tinv * Rt;
+}
+
