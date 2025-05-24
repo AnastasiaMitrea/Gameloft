@@ -1,9 +1,6 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   NewTrainingFramework.cpp
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\NewTrainingFramework.cpp(14,4): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  (compiling source file '/NewTrainingFramework.cpp')
-  
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\NewTrainingFramework.cpp(100,17): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\NewTrainingFramework.cpp(15,4): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   (compiling source file '/NewTrainingFramework.cpp')
   
   NewTrainingFramework.vcxproj -> C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\BIN-Nvidia\NewTrainingFramework.exe

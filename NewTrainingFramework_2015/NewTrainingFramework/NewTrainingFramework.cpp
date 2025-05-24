@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "Camera.h"
 
+float totalTime = 0.0f;
 
 Camera camera(
 	Vector3(0, 0, -1), // position
@@ -14,8 +15,8 @@ Camera camera(
 	PI/4,            // fov
 	0.2f,             // nearPlane
 	10.0f,            // farPlane
-	0.1f,             // moveSpeed
-	0.1f              // rotateSpeed
+	1.0f,             // moveSpeed
+	1.0f              // rotateSpeed
 );
 
 float angle = 0.0f;
@@ -94,15 +95,66 @@ void Draw(ESContext* esContext)
 
 void Update(ESContext* esContext, float deltaTime)
 {
-	//camera.setDeltaTime(deltaTime);
-	angle += step;
-	if (angle > 2.0f * PI)
-		angle -= 2.0f * PI;
+	totalTime += deltaTime;
+	if (totalTime >= Globals::frameTime) {
+		//camera.setDeltaTime(Globals::frameTime);
+		camera.deltaTime = Globals::frameTime;
+		//angle += step;
+		//if (angle > 2.0f * PI)
+		//	angle -= 2.0f * PI;
+		totalTime -= Globals::frameTime;
+	}
 
 }
 
 void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
+	/*
+	if (bIsPressed) 
+	{
+		printf("Tasta apasata %c (ASCII: %d)\n", key, (int)key);
+	}*/
+	if (bIsPressed)
+		switch (key) {
+		case 'w': case 'W':
+			camera.moveOz(1);
+			break;
+		case 'a': case 'A':
+			camera.moveOx(1);
+			break;
+		case 's': case 'S':
+			camera.moveOz(-1);
+			break;
+		case 'd': case 'D':
+			camera.moveOx(-1);
+			break;
+		case 'q': case 'Q':
+			camera.moveOy(1);
+			break;
+		case 'e': case 'E':
+			camera.moveOy(-1);
+			break;
+
+		case VK_UP:
+			camera.rotateOx(-1);
+			break;
+		case VK_DOWN:
+			camera.rotateOx(1);
+			break;
+		case VK_LEFT:
+			camera.rotateOy(-1);
+			break;
+		case VK_RIGHT:
+			camera.rotateOy(1);
+			break;
+		case 'g': case 'G':
+			camera.rotateOz(1);
+			break;
+		case 'h': case 'H':
+			camera.rotateOz(-1);
+			break;
+		}
+
 
 }
 
@@ -124,7 +176,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	if (Init(&esContext) != 0)
 		return 0;
-
+	
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);
 	esRegisterKeyFunc(&esContext, Key);
