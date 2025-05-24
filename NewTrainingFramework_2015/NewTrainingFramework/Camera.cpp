@@ -63,13 +63,14 @@ void Camera::moveOz(int sens) {
 	updateWorldView();
 }
 
+
 void Camera::rotateOx(int sens) {
 	Matrix mRotateOX;
 	mRotateOX.SetRotationX(rotateSpeed * deltaTime * sens);
+	Vector4 localTarget = Vector4(0.0f, 0.0f, -(target - position).Length(), 1.0f);
+	Vector4 rotatedTarget = localTarget * mRotateOX;
 	Vector4 localUp(0.0f, 1.0f, 0.0f, 0.0f);
 	Vector4 rotatedLocalUp = localUp * mRotateOX;
-	Vector4 localTarget = Vector4(0.0f, 0.0f, -(target - position).Length(), 1.0f);
-	Vector4 rotatedTarget = (mRotateOX * localTarget).toVector3();
 	up = (rotatedLocalUp * worldMatrix).toVector3();
 	up = up.Normalize();
 	target = (rotatedTarget * worldMatrix).toVector3();

@@ -124,6 +124,7 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	{
 		printf("Tasta apasata %c (ASCII: %d)\n", key, (int)key);
 	}*/
+
 	if (bIsPressed)
 		switch (key) {
 		case 'w': case 'W':
