@@ -31,22 +31,24 @@ int Init(ESContext* esContext)
 
 	//triangle data (heap)
 	Vertex verticesData[6];
-	
-	verticesData[0].pos.x = -0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
-	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z = 0.0f;
-	verticesData[2].pos.x = 0.5f;  verticesData[2].pos.y = 0.5f;  verticesData[2].pos.z = 0.0f;
-	
-	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = 0.5f;  verticesData[3].pos.z = 0.0f;
-	verticesData[4].pos.x = -0.5f;  verticesData[4].pos.y = -0.5f;  verticesData[4].pos.z = 0.0f;
-	verticesData[5].pos.x = 0.5f;  verticesData[5].pos.y = -0.5f;  verticesData[5].pos.z = 0.0f;
 
-	verticesData[0].color.x = 0.4f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.4f;
-	verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.7f; verticesData[1].color.z = 0.75f;
-	verticesData[2].color.x = 1.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
+	// Poziții
+	verticesData[0].pos = Vector3(-0.5f, 0.5f, 0.0f); // top-left
+	verticesData[1].pos = Vector3(-0.5f, -0.5f, 0.0f); // bottom-left
+	verticesData[2].pos = Vector3(0.5f, 0.5f, 0.0f); // top-right
 
-	verticesData[3].color.x = 1.0f; verticesData[3].color.y = 0.0f; verticesData[3].color.z = 2.0f;
-	verticesData[4].color.x = 1.0f; verticesData[4].color.y = 0.7f; verticesData[4].color.z = 0.75f;
-	verticesData[5].color.x = 0.4f; verticesData[5].color.y = 0.0f; verticesData[5].color.z = 0.4f;
+	verticesData[3].pos = Vector3(0.5f, 0.5f, 0.0f); // top-right
+	verticesData[4].pos = Vector3(-0.5f, -0.5f, 0.0f); // bottom-left
+	verticesData[5].pos = Vector3(0.5f, -0.5f, 0.0f); // bottom-right
+
+	// Culori
+	verticesData[0].color = Vector3(0.4f, 0.0f, 0.75f);
+	verticesData[1].color = Vector3(1.0f, 0.7f, 0.75f);
+	verticesData[2].color = Vector3(1.0f, 0.0f, 1.0f);
+
+	verticesData[3].color = Vector3(1.0f, 0.0f, 1.0f); 
+	verticesData[4].color = Vector3(1.0f, 0.7f, 0.75f);
+	verticesData[5].color = Vector3(1.0f, 1.0f, 1.0f);
 
 	//buffer object
 	glGenBuffers(1, &vboId);

@@ -1,15 +1,1 @@
-﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Camera.cpp
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\Camera.cpp(10,5): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-  (compiling source file '/Camera.cpp')
-  
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\Camera.cpp(39,20): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-  (compiling source file '/Camera.cpp')
-  
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\Camera.cpp(49,20): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-  (compiling source file '/Camera.cpp')
-  
-C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\NewTrainingFramework\Camera.cpp(59,20): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-  (compiling source file '/Camera.cpp')
-  
-  NewTrainingFramework.vcxproj -> C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\BIN-Nvidia\NewTrainingFramework.exe
+﻿  NewTrainingFramework.vcxproj -> C:\Users\anast\Repositories\Gameloft\NewTrainingFramework_2015\BIN-Nvidia\NewTrainingFramework.exe
