@@ -30,15 +30,23 @@ int Init(ESContext* esContext)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	//triangle data (heap)
-	Vertex verticesData[3];
-
-	verticesData[0].pos.x = 0.0f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
+	Vertex verticesData[6];
+	
+	verticesData[0].pos.x = -0.5f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
 	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z = 0.0f;
-	verticesData[2].pos.x = 0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
+	verticesData[2].pos.x = 0.5f;  verticesData[2].pos.y = 0.5f;  verticesData[2].pos.z = 0.0f;
+	
+	verticesData[3].pos.x = 0.5f;  verticesData[3].pos.y = 0.5f;  verticesData[3].pos.z = 0.0f;
+	verticesData[4].pos.x = -0.5f;  verticesData[4].pos.y = -0.5f;  verticesData[4].pos.z = 0.0f;
+	verticesData[5].pos.x = 0.5f;  verticesData[5].pos.y = -0.5f;  verticesData[5].pos.z = 0.0f;
 
 	verticesData[0].color.x = 0.4f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.4f;
 	verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.7f; verticesData[1].color.z = 0.75f;
 	verticesData[2].color.x = 1.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
+
+	verticesData[3].color.x = 1.0f; verticesData[3].color.y = 0.0f; verticesData[3].color.z = 2.0f;
+	verticesData[4].color.x = 1.0f; verticesData[4].color.y = 0.7f; verticesData[4].color.z = 0.75f;
+	verticesData[5].color.x = 0.4f; verticesData[5].color.y = 0.0f; verticesData[5].color.z = 0.4f;
 
 	//buffer object
 	glGenBuffers(1, &vboId);
@@ -86,7 +94,7 @@ void Draw(ESContext* esContext)
 		glUniformMatrix4fv(myShaders.mvpUniform, 1, GL_FALSE, &MVP.m[0][0]);
 	}
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -117,22 +125,22 @@ void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 	if (bIsPressed)
 		switch (key) {
 		case 'w': case 'W':
-			camera.moveOz(1);
-			break;
-		case 'a': case 'A':
-			camera.moveOx(1);
-			break;
-		case 's': case 'S':
 			camera.moveOz(-1);
 			break;
-		case 'd': case 'D':
+		case 'a': case 'A':
 			camera.moveOx(-1);
 			break;
+		case 's': case 'S':
+			camera.moveOz(1);
+			break;
+		case 'd': case 'D':
+			camera.moveOx(1);
+			break;
 		case 'q': case 'Q':
-			camera.moveOy(1);
+			camera.moveOy(-1);
 			break;
 		case 'e': case 'E':
-			camera.moveOy(-1);
+			camera.moveOy(1);
 			break;
 
 		case VK_UP:

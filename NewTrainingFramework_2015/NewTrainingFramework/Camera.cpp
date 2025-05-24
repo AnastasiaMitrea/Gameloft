@@ -81,7 +81,7 @@ void Camera::rotateOy(int sens) {
 	mRotateOY.SetRotationY(rotateSpeed * deltaTime * sens); 
 	Vector4 localTarget = Vector4(0.0f, 0.0f, -(target - position).Length(), 1.0f);
 	Vector4 rotatedTarget = localTarget * mRotateOY;
-	target = (worldMatrix * rotatedTarget).toVector3();
+	target = (rotatedTarget * worldMatrix).toVector3();
 	updateWorldView();
 }
 
