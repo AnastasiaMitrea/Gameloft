@@ -1,8 +1,10 @@
 #pragma once
 #include "../Utilities/utilities.h"
 
+#define PI 3.14
+
 class Camera {
-private:
+public:
 	Vector3 position;
 	Vector3 target;
 	Vector3 up;
@@ -17,8 +19,8 @@ private:
 	Vector3 zAxis;
 	Matrix viewMatrix;
 	Matrix worldMatrix;
-
-public:
+	Matrix perspectiveMatrix;
+	
 	void moveOx(int sens);
 	void moveOy(int sens);
 	void moveOz(int sens);
@@ -27,7 +29,7 @@ public:
 	void rotateOz(int sens);
 	void updateAxes();
 	void updateWorldView();
-	void setDeltaTime(GLfloat dt);
+	//void setDeltaTime(GLfloat dt);
 
 	Camera();
 	Camera(Vector3 position, Vector3 target, Vector3 up,

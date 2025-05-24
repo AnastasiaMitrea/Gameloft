@@ -1,34 +1,42 @@
-// NewTrainingFramework.cpp : Defines the entry point for the console application.
-//
-
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 #include "Vertex.h"
 #include "Shaders.h"
 #include <conio.h>
 #include "Globals.h"
+#include "Camera.h"
 
-#define PI 3.14
 
-float angle = 0.0f; 
+Camera camera(
+	Vector3(0, 0, -1), // position
+	Vector3(0, 0, 0),  // target
+	Vector3(0, 1, 0),  // up
+	PI/4,            // fov
+	0.2f,             // nearPlane
+	10.0f,            // farPlane
+	0.1f,             // moveSpeed
+	0.1f              // rotateSpeed
+);
+
+float angle = 0.0f;
 float step = 0.1f;
 
 GLuint vboId;
 Shaders myShaders;
 
-int Init ( ESContext *esContext )
+int Init(ESContext* esContext)
 {
-	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	//triangle data (heap)
 	Vertex verticesData[3];
 
-	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  0.0f;
-	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  0.0f;
-	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  0.0f;
-	
-	verticesData[0].color.x = 0.4f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.4f; 
-	verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.7f; verticesData[1].color.z = 0.75f; 
+	verticesData[0].pos.x = 0.0f;  verticesData[0].pos.y = 0.5f;  verticesData[0].pos.z = 0.0f;
+	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z = 0.0f;
+	verticesData[2].pos.x = 0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z = 0.0f;
+
+	verticesData[0].color.x = 0.4f; verticesData[0].color.y = 0.0f; verticesData[0].color.z = 0.4f;
+	verticesData[1].color.x = 1.0f; verticesData[1].color.y = 0.7f; verticesData[1].color.z = 0.75f;
 	verticesData[2].color.x = 1.0f; verticesData[2].color.y = 0.0f; verticesData[2].color.z = 1.0f;
 
 	//buffer object
@@ -63,12 +71,18 @@ void Draw(ESContext* esContext)
 		glVertexAttribPointer(myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Vector3)));
 	}
 
-	Matrix mRotation;
-	mRotation.SetRotationZ(angle);
+	Matrix modelMatrix;
+	modelMatrix.SetRotationZ(angle); // sau SetIdentity() pentru test
+	//modelMatrix.SetIdentity();
 
-	if (myShaders.matrixUniform != -1)
+	//Matrix MVP = camera.viewMatrix; 
+	//Matrix MVP = camera.worldMatrix;
+	//Matrix MVP = camera.viewMatrix * camera.perspectiveMatrix; 
+	Matrix MVP = modelMatrix * camera.viewMatrix * camera.perspectiveMatrix; //M * V * P
+
+	if (myShaders.mvpUniform != -1)
 	{
-		glUniformMatrix4fv(myShaders.matrixUniform, 1, GL_FALSE, (float*)(&mRotation.m[0][0]));
+		glUniformMatrix4fv(myShaders.mvpUniform, 1, GL_FALSE, &MVP.m[0][0]);
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -78,17 +92,18 @@ void Draw(ESContext* esContext)
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
-void Update ( ESContext *esContext, float deltaTime )
+void Update(ESContext* esContext, float deltaTime)
 {
-	angle += step ; 
+	//camera.setDeltaTime(deltaTime);
+	angle += step;
 	if (angle > 2.0f * PI)
-		angle -= 2.0f * PI; 
-	
+		angle -= 2.0f * PI;
+
 }
 
-void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
+void Key(ESContext* esContext, unsigned char key, bool bIsPressed)
 {
-	
+
 }
 
 void CleanUp()
@@ -99,22 +114,22 @@ void CleanUp()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	//identifying memory leaks
-	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF ); 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	ESContext esContext;
 
-    esInitContext ( &esContext );
+	esInitContext(&esContext);
 
-	esCreateWindow ( &esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
-	if ( Init ( &esContext ) != 0 )
+	if (Init(&esContext) != 0)
 		return 0;
 
-	esRegisterDrawFunc ( &esContext, Draw );
-	esRegisterUpdateFunc ( &esContext, Update );
-	esRegisterKeyFunc ( &esContext, Key);
+	esRegisterDrawFunc(&esContext, Draw);
+	esRegisterUpdateFunc(&esContext, Update);
+	esRegisterKeyFunc(&esContext, Key);
 
-	esMainLoop ( &esContext );
+	esMainLoop(&esContext);
 
 	//releasing OpenGL resources
 	CleanUp();
@@ -123,7 +138,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("Press any key...\n");
 	_getch();
 
-	
+
 	return 0;
 }
-

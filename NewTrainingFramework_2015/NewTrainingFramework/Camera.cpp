@@ -1,17 +1,21 @@
 ﻿#include "Camera.h"
 #include "stdafx.h"
 
+
+
 Camera::Camera()
 	: position(Vector3(0, 0, -1)),
 	target(Vector3(0, 0, 0)),
 	up(Vector3(0, 1, 0)),
-	fov(45.0f),
+	fov(PI/4),
 	nearPlane(0.2f),
 	farPlane(10.0f),
 	moveSpeed(0.1f),
 	rotateSpeed(0.1f),
 	deltaTime(0.0f)
 {
+	GLfloat aspect = (GLfloat)Globals::screenWidth / Globals::screenHeight;
+	perspectiveMatrix.SetPerspective(fov, aspect, nearPlane, farPlane);
 	updateWorldView();
 };
 
@@ -24,6 +28,8 @@ Camera::Camera(Vector3 position, Vector3 target, Vector3 up,
 	farPlane(farPlane), moveSpeed(moveSpeed),
 	rotateSpeed(rotateSpeed)
 {
+	GLfloat aspect = (GLfloat)Globals::screenWidth / Globals::screenHeight;
+	perspectiveMatrix.SetPerspective(fov, aspect, nearPlane, farPlane);
 	updateWorldView();
 };
 
@@ -101,24 +107,23 @@ void Camera::updateWorldView() {
 	Matrix Tinv;
 	Matrix Rt;
 
-	T.SetIdentity();
-	T.m[0][3] = position.x; T.m[1][3] = position.y; T.m[2][3] = position.z;
+	T.SetTranslation(position);
+	Tinv.SetTranslation(-position);
 	
 	R.SetZero();
 	R.m[0][0] = xAxis.x; R.m[0][1] = xAxis.y; R.m[0][2] = xAxis.z;
 	R.m[1][0] = yAxis.x; R.m[1][1] = yAxis.y; R.m[1][2] = yAxis.z;
 	R.m[2][0] = zAxis.x; R.m[2][1] = zAxis.y; R.m[2][2] = zAxis.z;
-	R.m[3][3] = 1;
+	R.m[3][3] = 1.0f;
 
 	worldMatrix = R * T;
-	
-	Tinv.SetIdentity();
-	Tinv.m[0][3] = -position.x; Tinv.m[1][3] = -position.y; Tinv.m[2][3] = -position.z;
-	
+
 	Rt = R.Transpose();
 	viewMatrix = Tinv * Rt;
 }
 
+/*
 void Camera::setDeltaTime(GLfloat dt){
 	deltaTime = dt;
 }
+*/
